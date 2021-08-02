@@ -9,15 +9,15 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
 // Initialize Apollo Client
 const client = new ApolloClient({
-  uri: "localhost:4000/graphql",
+  uri: "http://192.168.250.5:4000/graphql",
   cache: new InMemoryCache(),
 });
 
 export default () => (
-  <ApolloProvider client={client}>
-    <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
-      <StatusBar backgroundColor="#EFEFEF" barStyle="dark-content" />
-      <LoginScreen />
-    </ApplicationProvider>
-  </ApolloProvider>
+  <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
+    <StatusBar backgroundColor="#EFEFEF" barStyle="dark-content" />
+    <ApolloProvider client={client}>
+      <RegisterScreen />
+    </ApolloProvider>
+  </ApplicationProvider>
 );
