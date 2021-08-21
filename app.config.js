@@ -1,7 +1,7 @@
-{
+module.exports = {
   "expo": {
-    "name": "fuchsya",
-    "slug": "fuchsya",
+    "name": "We-Share",
+    "slug": "We-Share",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

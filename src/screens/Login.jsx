@@ -4,17 +4,17 @@ import { Layout, Text } from "@ui-kitten/components";
 import { BlockButton } from "../components/BlockButton";
 import { AppLogotype } from "../components/AppLogotype";
 import { Subtitle } from "../components/Subtitle";
-import { Input } from "./../components/Input";
+import { Input } from "../components/Input";
 import { gql, useMutation } from "@apollo/client";
 import { Mutations } from "../graphql/Mutations";
 import * as Keychain from "react-native-keychain";
+import { useNavigation } from "@react-navigation/native";
 
-// When you want to store the session
-
-export const RegisterScreen = () => {
+export const LoginScreen = () => {
   const [register, { loading }] = useMutation(Mutations.REGISTER);
-  const [email, setEmail] = React.useState("cucho222@correo.com");
-  const [password, setPassword] = React.useState("pasguor23456");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const navigation = useNavigation()
 
   return (
     <Layout
@@ -33,29 +33,38 @@ export const RegisterScreen = () => {
         autoCompleteType="email"
         value={email}
         onChangeText={(txt) => setEmail(txt)}
-        />
+      />
       <Input
         placeholder="Password"
         secureTextEntry
         value={password}
         onChangeText={(txt) => setPassword(txt)}
-        />
+      />
       <BlockButton
-        onPress={() => {
-            register({
-              variables: {
-                password,
-                email,
-              },
-            })
-            .then((r) => {
-                const rawValue = JSON.stringify(r);
-                Keychain.setGenericPassword("session", rawValue);
-              })
-              .catch((e) => console.error(e));
+        onPress={async () => {
+          const user = await register({
+            variables: {
+              password,
+              email,
+            },
+          });
+          console.log(user);
+          const rawValue = JSON.stringify(user);
+          await Keychain.setGenericPassword("session", rawValue);
+          const pass = await Keychain.getGenericPassword();
+          console.log(pass);
         }}
       >
         Login
+      </BlockButton>
+      <BlockButton
+      appearance="outline"
+        size="small"
+        onPress={async () => {
+          navigation.replace("Register");
+        }}
+      >
+        No estoy registrado.
       </BlockButton>
     </Layout>
   );
