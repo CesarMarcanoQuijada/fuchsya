@@ -1,19 +1,17 @@
 import React from "react";
-import { Alert, View } from "react-native";
-import { Layout, Spinner, Text } from "@ui-kitten/components";
+import { Alert, View, TextInput } from "react-native";
+import { Layout, Spinner } from "@ui-kitten/components";
 import { BlockButton } from "../components/BlockButton";
 import { AppLogotype } from "../components/AppLogotype";
 import { Subtitle } from "../components/Subtitle";
-import { Input } from "../components/Input";
 import { useMutation } from "@apollo/client";
 import { Mutations } from "../graphql/Mutations";
 import * as SecureStore from "expo-secure-store";
 import { useNavigation } from "@react-navigation/native";
 
-export const LoginScreen = () => {
-  const [login] = useMutation(Mutations.LOGIN);
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+export const VerifyScreen = () => {
+  const [verify] = useMutation(Mutations.VERIFY_EMAIL);
+  const [code, setCode] = React.useState("");
   const [spinner, setSpinner] = React.useState(false);
   const navigation = useNavigation();
 
@@ -22,7 +20,7 @@ export const LoginScreen = () => {
       setSpinner(true);
       let data = await SecureStore.getItemAsync("user-token");
       data = JSON.parse(data);
-      if (data) {
+      if (!data) {
         setSpinner(false);
       } else {
         navigation.replace("Logged");
@@ -33,24 +31,30 @@ export const LoginScreen = () => {
     };
   }, []);
 
-  const loginFunc = async () => {
+  const verifyFunc = async () => {
     setSpinner(true);
     try {
-      const user = await login({
-        variables: {
-          email,
-          password,
-        },
+      let data = await SecureStore.getItemAsync("user-register-verify-stage");
+      data = JSON.parse(data);
+      data.token1 = data.token;
+      delete data.token;
+      data.token2 = code;
+      console.log(data)
+
+      const user = await verify({
+        variables: data,
       });
-      if (user.data.Login.error) {
+      if (user.data.Register.startsWith("Error")) {
         setSpinner(false);
-        Alert.alert("Error", user.data.Login);
+        Alert.alert("Error", user.data.Register);
+        console.log(user.data.Register);
       } else {
         setSpinner(false);
         await SecureStore.setItemAsync(
-          "user-register-verify-stage",
-          JSON.stringify(user.data.Login)
+          "user-token",
+          JSON.stringify({ token: user.data.Register })
         );
+        await SecureStore.deleteItemAsync("user-register-verify-stage");
         navigation.replace("Logged");
       }
     } catch (error) {
@@ -69,21 +73,25 @@ export const LoginScreen = () => {
       }}
     >
       <AppLogotype />
-      <Subtitle content="Iniciar sesion" />
-      <Input
-        placeholder="Correo"
-        keyboardType="email-address"
-        autoCompleteType="email"
-        value={email}
-        onChangeText={(txt) => setEmail(txt)}
-      />
-      <Input
-        placeholder="Contraseña"
-        secureTextEntry
-        value={password}
-        onChangeText={(txt) => setPassword(txt)}
-      />
-      <BlockButton onPress={loginFunc}>Iniciar sesion</BlockButton>
+      <Subtitle content="Confirmar correo" />
+        <TextInput
+          placeholder="Codigo de verificacion"
+          value={code}
+          onChangeText={(txt) => setCode(txt)}
+          style={{
+            textAlign: "center",
+            width: "100%",
+            color: "black",
+            fontSize: 20,
+            backgroundColor: "white",
+            padding: 15,
+            borderRadius: 16,
+            margin: 20,
+            width: "100%",
+          }}
+          maxLength={8}
+        />
+      <BlockButton onPress={verifyFunc}>Verificar Correo</BlockButton>
       <BlockButton
         appearance="outline"
         size="small"
@@ -91,7 +99,7 @@ export const LoginScreen = () => {
           navigation.replace("Register");
         }}
       >
-        No estoy registrado.
+        Volver al registro.
       </BlockButton>
       {(() => {
         if (spinner) {

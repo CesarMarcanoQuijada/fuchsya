@@ -3,7 +3,8 @@ import { Text } from "@ui-kitten/components";
 
 export const Subtitle = ({ content }) => (
   <Text
-    style={{ fontWeight: "500", color: "#7C00CF", marginBottom: 20 }}
+    style={{ fontWeight: "500", marginBottom: 20 }}
+    status="primary"
     category="h3"
   >
     {content}

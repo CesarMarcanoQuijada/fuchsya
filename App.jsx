@@ -10,10 +10,10 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { AppNavigator } from "./src/navigation/LoggedNavigation";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
+import { VerifyScreen } from "./src/screens/VerifyEmail";
 
-// Initialize Apollo Client
 const client = new ApolloClient({
-  uri: "http://192.168.250.4:4000/graphql",
+  uri: "http://192.168.250.3:4000/graphql",
   cache: new InMemoryCache(),
 });
 
@@ -26,9 +26,10 @@ export default () => (
       <StatusBar backgroundColor="#161C35" barStyle="light-content" />
       <ApolloProvider client={client}>
         <Stack.Navigator screenOptions={{ header: () => null }}>
-          <Stack.Screen name="Logged" component={AppNavigator} />
-          <Stack.Screen name="Register" component={RegisterScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Verify" component={VerifyScreen} />
+          <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen name="Logged" component={AppNavigator} />
         </Stack.Navigator>
       </ApolloProvider>
     </ApplicationProvider>

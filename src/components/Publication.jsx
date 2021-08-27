@@ -11,7 +11,12 @@ export default Publication = ({ withImage }) => {
         if (withImage) {
           return (
             <View>
-              <Text category="p1" style={{marginHorizontal: 10, marginBottom: 10}}>Hello world</Text>
+              <Text
+                category="p1"
+                style={{ marginHorizontal: 10, marginBottom: 10 }}
+              >
+                Hello world
+              </Text>
               <Image
                 source={require("./example.jpg")}
                 style={{ width: "100%", height: 300, borderRadius: 16 }}
@@ -20,7 +25,16 @@ export default Publication = ({ withImage }) => {
           );
         } else {
           return (
-            <View>
+            <View
+              style={{
+                width: "100%",
+                height: 300,
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#B582FF",
+                borderRadius: 16
+              }}
+            >
               <Text category="h4">Hello world</Text>
             </View>
           );

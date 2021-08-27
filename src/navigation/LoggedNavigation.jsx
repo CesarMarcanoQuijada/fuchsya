@@ -2,7 +2,8 @@ import React from "react";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import NewsScreen from "./../screens/News";
-import FriendsScreen from './../screens/Friends';
+import FriendsScreen from "./../screens/Friends";
+import CreateScreen from "./../screens/Create";
 import {
   BottomNavigation,
   BottomNavigationTab,
@@ -14,8 +15,8 @@ const { Navigator, Screen } = createBottomTabNavigator();
 const routes = [
   { icon: "compass-outline", name: "Noticias", component: NewsScreen },
   { icon: "people-outline", name: "Amigos", component: FriendsScreen },
-  { icon: "plus", name: "Create", component: NewsScreen },
-  { icon: "hash-outline", name: "Trends", component: NewsScreen },
+  { icon: "plus", name: "Create", component: CreateScreen },
+  { icon: "trending-up-outline", name: "Trends", component: NewsScreen },
   { icon: "bell-outline", name: "Perfil", component: NewsScreen },
 ];
 
