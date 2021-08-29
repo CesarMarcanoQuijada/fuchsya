@@ -26,9 +26,9 @@ export default () => (
       <StatusBar backgroundColor="#161C35" barStyle="light-content" />
       <ApolloProvider client={client}>
         <Stack.Navigator screenOptions={{ header: () => null }}>
+          <Stack.Screen name="Register" component={RegisterScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="Verify" component={VerifyScreen} />
-          <Stack.Screen name="Register" component={RegisterScreen} />
           <Stack.Screen name="Logged" component={AppNavigator} />
         </Stack.Navigator>
       </ApolloProvider>

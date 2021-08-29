@@ -2,6 +2,7 @@ import React from "react";
 import { Avatar, Button, Icon, Layout, Text } from "@ui-kitten/components";
 import { Image, ScrollView, View } from "react-native";
 import Publication from "../components/Publication";
+import Logout from "../functions/Logout";
 
 export default NewsScreen = () => {
 
@@ -27,6 +28,7 @@ export default NewsScreen = () => {
           />
           <Button
             style={{ width: 40, height: 40, borderRadius: 15, marginLeft: 10 }}
+            onPress={Logout}
             accessoryLeft={(props) => <Icon {...props} name="person" />}
           />
         </View>

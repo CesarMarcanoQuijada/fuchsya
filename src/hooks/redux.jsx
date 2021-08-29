@@ -1,5 +1,28 @@
-import React from 'react'
+import { configureStore, createSlice } from '@reduxjs/toolkit'
 
-export const NavigationContext = React.useContext()
+export const counterSlice = createSlice({
+  name: 'counter',
+  initialState: {
+    value: 0
+  },
+  reducers: {
+    increment: state => {
+      state.value += 1
+    },
+    decrement: state => {
+      state.value -= 1
+    },
+    incrementByAmount: (state, action) => {
+      state.value += action.payload
+    }
+  }
+})
 
-export const NavigationContextProvider = NavigationContext.Provider
+export const { increment, decrement, incrementByAmount } = counterSlice.actions
+
+const reducer = counterSlice.reducer
+
+export default configureStore({
+  reducer: reducer,
+  
+})
