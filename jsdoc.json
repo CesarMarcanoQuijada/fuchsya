@@ -1,0 +1,39 @@
+{
+  "plugins": [],
+  "source": {
+    "include": [
+      "src",
+      "src/components",
+      "src/components/buttons",
+      "src/components/containers",
+      "src/components/modals",
+      "src/components/texts",
+      "src/context",
+      "src/context/auth",
+      "src/context/theme",
+      "src/functions",
+      "src/functions/auth",
+      "src/functions/post",
+      "src/functions/time",
+      "src/graphql",
+      "src/hooks",
+      "src/providers",
+      "src/router",
+      "src/screens",
+      "src/screens/auth",
+      "src/screens/create",
+      "src/screens/logged"
+    ],
+    "includePattern": ".*",
+    "excludePattern": "(node_modules|docs|.expo|.expo-shared|assets|.git)"
+  },
+  "sourceType": "module",
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": ["jsdoc", "closure"]
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
+  }
+}

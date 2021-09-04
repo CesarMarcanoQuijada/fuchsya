@@ -1,11 +1,12 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import Index from './src'
+import { AuthState } from './src/context'
 
 const App = () => {
   return (
-    <View>
-      <Text>Hello world</Text>
-    </View>
+    <AuthState>
+      <Index />
+    </AuthState>
   )
 }
 
