@@ -1,32 +1,23 @@
 import React from "react";
-import { Button } from "react-native";
-import { View, Text } from "react-native";
-import { AuthContext } from "./context";
+import { NavigationContainer } from "@react-navigation/native";
+import * as eva from "@eva-design/eva";
+import { ApplicationProvider, IconRegistry } from "@ui-kitten/components";
+import * as theme from "../theme.json";
+import { EvaIconsPack } from "@ui-kitten/eva-icons";
+import { DefaultNavigator } from "./router";
 
 /**
  * Index
  * @returns Index
  */
 const Index = () => {
-  const { user, login } = React.useContext(AuthContext);
-
   return (
-    <View>
-      <Text>asdas</Text>
-      <Button
-        title="JAJSJ"
-        onPress={() => {
-          alert(JSON.stringify(user));
-        }}
-      />
-      <Text>asdas</Text>
-      <Button
-        title="JAJSJ"
-        onPress={() => {
-          login("Hola idiota");
-        }}
-      />
-    </View>
+    <NavigationContainer>
+      <IconRegistry icons={EvaIconsPack} />
+      <ApplicationProvider {...eva} theme={{ ...eva.dark, ...theme }}>
+        <DefaultNavigator />
+      </ApplicationProvider>
+    </NavigationContainer>
   );
 };
 
