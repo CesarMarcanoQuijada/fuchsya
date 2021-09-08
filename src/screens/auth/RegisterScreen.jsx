@@ -8,35 +8,56 @@ import {
   Dimensions,
 } from "react-native";
 import { AppName, AuthInput } from "../../components";
-import { validateEmail, validatePass } from "../../functions";
+import {
+  validateEmail,
+  validateName,
+  validateUsername,
+  validatePass,
+} from "../../functions";
+import { registerInputs } from "../../data";
 import { useNavigation } from "@react-navigation/core";
-import { loginInputs } from "../../data";
 
-export default function LoginScreen() {
+export default function RegisterScreen() {
   const navigation = useNavigation();
 
   const defaultState = { err: false, txt: "" };
 
+  const [name, setName] = useState(defaultState);
+  const [surname, setSurname] = useState(defaultState);
+  const [username, setUsername] = useState(defaultState);
   const [email, setEmail] = useState(defaultState);
   const [pass, setPass] = useState(defaultState);
+  const [confirmPass, setConfirmPass] = useState(defaultState);
 
   const chgTxt = (txt, setTxt, type) => {
     let func;
     switch (type) {
       case "email":
         func = validateEmail;
+      case "name":
+        func = validateName;
+      case "username":
+        func = validateUsername;
       case "pass":
         func = validatePass;
     }
     return [txt, (e) => func(e, { set: setTxt, get: txt }), type];
   };
 
-  const inputs = loginInputs({
+  const inputs = registerInputs({
+    name,
+    setName,
     chgTxt,
+    username,
+    setUsername,
+    surname,
+    setSurname,
     email,
     setEmail,
     pass,
     setPass,
+    confirmPass,
+    setConfirmPass,
   });
 
   return (
@@ -56,14 +77,9 @@ export default function LoginScreen() {
           {inputs.map(({ placeholder, chTxt }, i) => {
             return <AuthInput {...{ placeholder, chTxt }} key={i} />;
           })}
-          <Button style={styles.authButton}>INICIAR SESION</Button>
-          <Button
-            style={styles.authButton}
-            onPress={() => navigation.navigate("register")}
-            size="small"
-            appearance="outline"
-          >
-            No estoy registrado
+          <Button style={styles.authButton}>REGISTRARSE</Button>
+          <Button style={styles.authButton} onPress={() => navigation.navigate('login')}size="small" appearance="outline">
+            Estoy registrado
           </Button>
         </View>
       </ScrollView>

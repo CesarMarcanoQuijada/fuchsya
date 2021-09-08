@@ -6,7 +6,7 @@ import { slides } from "../../data";
 
 const { height, width } = Dimensions.get("window");
 
-const Slide = ({ item: { description, name, icon }, index }) => {
+const Slide = ({ item: { name, icon }, index }) => {
   const navigation = useNavigation();
 
   return (
@@ -41,7 +41,7 @@ const Slide = ({ item: { description, name, icon }, index }) => {
                 <Button
                   style={styles.loginButton}
                   appearance="filled"
-                  onPress={() => navigation.replace("login")}
+                  onPress={() => navigation.replace("register")}
                 >
                   REGISTRARSE
                 </Button>
